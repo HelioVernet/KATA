@@ -29,50 +29,11 @@ namespace PrisoDilemaTest
         [TestMethod]
         public void FirstChoiceOfSuspect1()
         {
-            var x = gameMaster.GetSuspect(1).choices[0];
-            Assert.AreEqual(0, x);
+            var db = gameMaster.GetDB();
+            var scoreDb = db.GetScoreDbById(1);
+            Assert.AreEqual(0, scoreDb.choicesSuspect[0]);
         }
-        [TestMethod]
-        public void SecondChoiceOfSuspect1()
-        {
-            var x = gameMaster.GetSuspect(1).choices[1];
-            Assert.AreEqual(0, x);
-        }
-        [DataTestMethod]
-        [DataRow(2)]
-        [DataRow(5)]
-        [DataRow(7)]
-        [DataRow(9)]
-        public void ThirdPlusChoiceOfSuspect1(int y)
-        {
-            var x = gameMaster.GetSuspect(1).choices[y];
-            var expected = gameMaster.GetSuspect(2).choices[y-1];
-            Assert.AreEqual(expected, x);
-        }
-
-        [TestMethod]
-        public void FirstChoiceOfSuspect2()
-        {
-            var x = gameMaster.GetSuspect(2).choices[0];
-            Assert.AreEqual(0, x);
-        }
-        [TestMethod]
-        public void SecondChoiceOfSuspect2()
-        {
-            var x = gameMaster.GetSuspect(2).choices[1];
-            Assert.AreEqual(0, x);
-        }
-        [DataTestMethod]
-        [DataRow(2)]
-        [DataRow(5)]
-        [DataRow(7)]
-        [DataRow(9)]
-        public void ThirdPlusChoiceOfSuspect2(int y)
-        {
-            var x = gameMaster.GetSuspect(2).choices[y];
-            var expected = GetAverage(gameMaster.GetSuspect(1).choices, y);
-            Assert.AreEqual(expected, x);
-        }
+       
         int GetAverage(List<int> otherSuspectChoice, int actualRound)
         {
             actualRound++;

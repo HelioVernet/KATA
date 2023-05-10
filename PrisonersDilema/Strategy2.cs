@@ -6,36 +6,32 @@ using System.Threading.Tasks;
 
 namespace PrisonersDilema
 {
-    public class Suspect2 : Suspect
+    public class Strategy2 : Strategy, IStrategy
     {
-        public Suspect2(IRandomizer random) : base(random)
-        {
 
-        }
-        public override int MakeChoice(int round, List<int> otherSuspectChoice)
+        public void MakeChoice(int suspectId, int round, WrapperScoreDB wrapperScoreDB, List<int> randomNumbers)
         {
-            if(round == 0)
+            if (round == 0)
             {
-                choices.Add(0);
-                return 0;
+                var db = wrapperScoreDB.GetScoreDbById(suspectId);
+                db.choicesSuspect.Add(0);
             }
-            if(round == 1)
+            if (round == 1)
             {
                 var c = randomNumbers[round];
-                choices.Add(c);
-                return c;
+                var db = wrapperScoreDB.GetScoreDbById(suspectId);
+                db.choicesSuspect.Add(c);
             }
             else
             {
-                int c = GetAverage(otherSuspectChoice);
-                choices.Add(c);
-                return c;
+                var db = wrapperScoreDB.GetScoreDbById(suspectId);
+                int c = GetAverage(wrapperScoreDB.GetScoreDbById(GetOtherSuspectId(suspectId)).choicesSuspect);
+                db.choicesSuspect.Add(c);
             }
         }
 
         int GetAverage(List<int> otherSuspectChoice)
         {
-
             int spoke = 0;
             int didntSpoke = 0;
             foreach (var i in otherSuspectChoice)

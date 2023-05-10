@@ -6,10 +6,8 @@ using System.Threading.Tasks;
 
 namespace PrisonersDilema
 {
-    public interface IGameMaster
+    public interface IStrategy
     {
-        public void Start();
-        public Suspect GetSuspect(int whichOne);
-        public WrapperScoreDB GetDB();
+        public void MakeChoice(int suspectID, int round, WrapperScoreDB wrapperScoreDB, List<int> randomNumbers);
     }
 }

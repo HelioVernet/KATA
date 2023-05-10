@@ -8,17 +8,22 @@ namespace PrisonersDilema
 {
     public class Suspect
     {
-        public List<int> choices = new List<int>();
+        public int SuspectID { get; }
         public List<int> randomNumbers = new List<int>();
-        public Suspect(IRandomizer random)
+        public IStrategy Strat { get; }
+        public WrapperScoreDB WrapperScoreDB { get; }
+
+        public Suspect(int suspectId,IRandomizer random, IStrategy strat1, WrapperScoreDB wrapperScoreDB)
         {
+            SuspectID = suspectId;
             randomNumbers = random.GetRandomValues();
+            Strat = strat1;
+            WrapperScoreDB = wrapperScoreDB;
         }
-        virtual public int MakeChoice(int round, List<int> otherSuspectChoice)
+
+        public void ApplyStrategy(int round)
         {
-            var c = randomNumbers[round];
-            choices.Add(c);
-            return c;
+            Strat.MakeChoice(SuspectID, round, WrapperScoreDB, randomNumbers);
         }
     }
 }

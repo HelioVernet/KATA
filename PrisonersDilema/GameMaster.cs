@@ -4,15 +4,24 @@
     {
         Suspect suspect1;
         Suspect suspect2;
+        IStrategy strategy1 = new Strategy1();
+        IStrategy strategy2 = new Strategy1();
+        WrapperScoreDB wrapperScoreDB;
         public GameMaster(IRandomizer randomizer)
         {
-            suspect1 = new Suspect1(randomizer);
-            suspect2 = new Suspect2(randomizer);
+            wrapperScoreDB = new WrapperScoreDB();
+            wrapperScoreDB.db.Add(1, new ScoreDB());
+            wrapperScoreDB.db.Add(2, new ScoreDB());
+            suspect1 = new Suspect(1,randomizer, strategy1, wrapperScoreDB);
+            suspect2 = new Suspect(2,randomizer, strategy2, wrapperScoreDB);
         }
         public GameMaster(IRandomizer randomizer1, IRandomizer randomizer2)
         {
-            suspect1 = new Suspect1(randomizer1);
-            suspect2 = new Suspect2(randomizer2);
+            wrapperScoreDB = new WrapperScoreDB();
+            wrapperScoreDB.db.Add(1, new ScoreDB());
+            wrapperScoreDB.db.Add(2, new ScoreDB());
+            suspect1 = new Suspect(1,randomizer1, strategy1, wrapperScoreDB);
+            suspect2 = new Suspect(2,randomizer2, strategy2, wrapperScoreDB);
         }
 
         public Suspect GetSuspect(int ID)
@@ -23,13 +32,18 @@
             }
             return suspect2;
         }
+        public WrapperScoreDB GetDB()
+        {
+            return wrapperScoreDB;
+        }
 
         public void Start()
         {
             for (int i = 0; i < 10; i++)
             {
-                suspect1.MakeChoice(i, suspect2.choices);
-                suspect2.MakeChoice(i, suspect1.choices);
+                suspect1.ApplyStrategy(i);
+                suspect2.ApplyStrategy(i);
+                wrapperScoreDB.UpdateScore();
             }
         }
     }
