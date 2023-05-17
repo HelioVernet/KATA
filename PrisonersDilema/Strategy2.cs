@@ -13,19 +13,19 @@ namespace PrisonersDilema
         {
             if (round == 0)
             {
-                var db = wrapperScoreDB.GetScoreDbById(suspectId);
+                var db = wrapperScoreDB.GetDbById(suspectId);
                 db.choicesSuspect.Add(0);
             }
             if (round == 1)
             {
                 var c = randomNumbers[round];
-                var db = wrapperScoreDB.GetScoreDbById(suspectId);
+                var db = wrapperScoreDB.GetDbById(suspectId);
                 db.choicesSuspect.Add(c);
             }
             else
             {
-                var db = wrapperScoreDB.GetScoreDbById(suspectId);
-                int c = GetAverage(wrapperScoreDB.GetScoreDbById(GetOtherSuspectId(suspectId)).choicesSuspect);
+                var db = wrapperScoreDB.GetDbById(suspectId);
+                int c = GetAverage(wrapperScoreDB.GetDbById(GetOtherSuspectId(suspectId)).choicesSuspect);
                 db.choicesSuspect.Add(c);
             }
         }

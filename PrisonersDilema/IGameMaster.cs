@@ -8,8 +8,8 @@ namespace PrisonersDilema
 {
     public interface IGameMaster
     {
-        public void Start();
+        public void Start(IStrategy stratSuspect1, IStrategy stratSuspect2);
         public Suspect GetSuspect(int whichOne);
-        public WrapperScoreDB GetDB();
+        public WrapperScoreDB GetScoreDB();
     }
 }

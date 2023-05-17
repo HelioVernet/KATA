@@ -13,13 +13,14 @@ namespace PrisonersDilema
             if (round <= 1)
             {
                 var c = randomNumbers[round];
-                var db = wrapperScoreDB.GetScoreDbById(suspectId);
+                var db = wrapperScoreDB.GetDbById(suspectId);
                 db.choicesSuspect.Add(c);
             }
             else
             {
-                var db = wrapperScoreDB.GetScoreDbById(GetOtherSuspectId(suspectId));
-                var c = db.choicesSuspect.Last();
+                var db = wrapperScoreDB.GetDbById(suspectId);
+                var c = wrapperScoreDB.GetDbById(GetOtherSuspectId(suspectId)).choicesSuspect.Last();
+                wrapperScoreDB.GetDbById(suspectId);
                 db.choicesSuspect.Add(c);
             };
         }

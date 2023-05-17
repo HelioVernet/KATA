@@ -10,7 +10,7 @@ namespace PrisonersDilema
     public class WrapperScoreDB
     {
         public Dictionary<int,ScoreDB> db = new Dictionary<int, ScoreDB>();
-        public ScoreDB GetScoreDbById(int id)
+        public ScoreDB GetDbById(int id)
         {
             return db[id];
         }
