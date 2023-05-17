@@ -1,6 +1,8 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using PrisonersDilema;
+using System.Text;
 
 namespace PrisoDilemaTest
 {
@@ -15,7 +17,7 @@ namespace PrisoDilemaTest
             mockRandomizer1.SetupSequence(x => x.GetRandomValues()).Returns(new List<int>() { 0, 1, 0, 0, 0, 0, 1, 1, 0, 1 });
 
             var mockRandomizer2 = new Mock<IRandomizer>();
-            mockRandomizer2.SetupSequence(x => x.GetRandomValues()).Returns(new List<int>() { 1, 0, 0, 0, 0, 1, 0, 1, 1, 0 });
+            mockRandomizer2.SetupSequence(x => x.GetRandomValues()).Returns(new List<int>() { 1, 0, 0, 1, 0, 1, 0, 1, 1, 0 });
 
             var services = new ServiceCollection();
             services.AddScoped<IGameMaster>(x => new GameMaster(mockRandomizer1.Object,mockRandomizer2.Object));
@@ -80,6 +82,14 @@ namespace PrisoDilemaTest
             var scoreDb = db.GetDbById(2);
             int expected = GetAverage(db.GetDbById(1).choicesSuspect, round);
             Assert.AreEqual(expected, scoreDb.choicesSuspect[round]);
+        }
+
+        [TestMethod]
+        public void TestScore()
+        {
+            var db = gameMaster.GetScoreDB();
+            Assert.AreEqual(-9, db.GetDbById(1).scoreSuspect);
+            Assert.AreEqual(-19, db.GetDbById(2).scoreSuspect);
         }
 
 
