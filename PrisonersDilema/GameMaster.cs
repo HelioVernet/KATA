@@ -9,13 +9,6 @@
         public IRandomizer Randomizer1 { get; }
         public IRandomizer Randomizer2 { get; }
 
-        public GameMaster(IRandomizer randomizer)
-        {
-            wrapperScoreDB = new WrapperScoreDB();
-            wrapperScoreDB.db.Add(1, new ScoreDB());
-            wrapperScoreDB.db.Add(2, new ScoreDB());
-
-        }
         public GameMaster(IRandomizer randomizer1, IRandomizer randomizer2)
         {
             wrapperScoreDB = new WrapperScoreDB();

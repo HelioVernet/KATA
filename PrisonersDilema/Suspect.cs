@@ -13,11 +13,11 @@ namespace PrisonersDilema
         public IStrategy Strat { get; }
         public WrapperScoreDB WrapperScoreDB { get; }
 
-        public Suspect(int suspectId,IRandomizer random, IStrategy strat1, WrapperScoreDB wrapperScoreDB)
+        public Suspect(int suspectId,IRandomizer random, IStrategy strat, WrapperScoreDB wrapperScoreDB)
         {
             SuspectID = suspectId;
             randomNumbers = random.GetRandomValues();
-            Strat = strat1;
+            Strat = strat;
             WrapperScoreDB = wrapperScoreDB;
         }
 
